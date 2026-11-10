@@ -33,7 +33,7 @@ services:
 
   api:
     build:
-      context: . # <--- КОНТЕКСТ ТЕПЕРЬ КОРЕНЬ РЕПОЗИТОРИЯ
+      context: .
       dockerfile: src/TaskManagement.Api/Dockerfile
     container_name: taskmanagement-api
     environment:
@@ -53,7 +53,7 @@ services:
 
   listener:
     build:
-      context: . # <--- КОНТЕКСТ ТЕПЕРЬ КОРЕНЬ РЕПОЗИТОРИЯ
+      context: .
       dockerfile: src/TaskManagement.Listener/Dockerfile
     container_name: taskmanagement-listener
     environment:

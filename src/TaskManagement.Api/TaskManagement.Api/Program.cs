@@ -6,7 +6,7 @@ using TaskManagement.Api.Middleware;
 using TaskManagement.Application;
 using TaskManagement.Infrastructure;
 
-// Настройка Serilog (логирование)
+// Настройка Serilog
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] [CorrelationId: {CorrelationId}] {Message:lj}{NewLine}{Exception}")

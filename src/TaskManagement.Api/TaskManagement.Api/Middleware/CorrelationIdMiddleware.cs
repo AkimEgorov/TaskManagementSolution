@@ -27,13 +27,10 @@ namespace TaskManagement.Api.Middleware
 
             var correlationId = extractedCorrelationId.ToString();
 
-            // 2. Сохраняем в AsyncLocal (будет доступен во всех async-вызовах, включая MassTransit)
             CorrelationContext.CorrelationId = correlationId;
 
-            // 3. Добавляем в Serilog LogContext
             using (LogContext.PushProperty("CorrelationId", correlationId))
             {
-                // 4. Добавляем в заголовок ответа
                 context.Response.OnStarting(() =>
                 {
                     if (!context.Response.Headers.ContainsKey(CorrelationIdHeader))
@@ -43,12 +40,12 @@ namespace TaskManagement.Api.Middleware
                     return Task.CompletedTask;
                 });
 
-                Log.Information("🔵 [REQUEST START] {Method} {Path} | CorrelationId: {CorrelationId}",
+                Log.Information("[REQUEST START] {Method} {Path} | CorrelationId: {CorrelationId}",
                     context.Request.Method, context.Request.Path, correlationId);
 
                 await _next(context);
 
-                Log.Information("✅ [REQUEST END] {Method} {Path} | Status: {StatusCode} | CorrelationId: {CorrelationId}",
+                Log.Information("[REQUEST END] {Method} {Path} | Status: {StatusCode} | CorrelationId: {CorrelationId}",
                     context.Request.Method, context.Request.Path, context.Response.StatusCode, correlationId);
             }
         }
